@@ -1,0 +1,31 @@
+{
+  "name": "connectifycrm",
+  "version": "1.0.0",
+  "description": "ConnectifyCRM é uma plataforma inovadora de Gerenciamento de Relacionamento com o Cliente (CRM) projetada para simplificar e aprimorar a maneira como as empresas interagem com seus clientes e gerenciam informações vitais de contato. Com uma abordagem centrada no usuário e funcionalidades poderosas.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "ts-node-dev --cls --rs --ignore-watch node_modules src/server.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^5.8.1",
+    "@types/bcryptjs": "^2.4.6",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-async-errors": "^3.1.1",
+    "jsonwebtoken": "^9.0.2",
+    "prisma": "^5.8.1"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.19",
+    "@types/jsonwebtoken": "^9.0.3",
+    "@types/node": "^18.15.11",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.2.2"
+  }
+}
