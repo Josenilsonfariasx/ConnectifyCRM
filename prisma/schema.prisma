@@ -42,10 +42,10 @@ model Communication {
   telefone     String
   dataRegistro DateTime @default(now())
 
-  clientId     String
-  contactId    String
+  clientId     String?
+  contactId    String? 
 
-  client       Client   @relation(fields: [clientId], references: [id])
-  contact      Contact  @relation(fields: [contactId], references: [id])
+  client       Client?   @relation(fields: [clientId], references: [id])
+  contact      Contact?  @relation(fields: [contactId], references: [id])
 }
 
