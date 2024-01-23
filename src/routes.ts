@@ -12,12 +12,15 @@ router.get('/on', (req:Request, res:Response)=> {
   return res.json({ on : true })
 })
 
-//clientRoutes
+// clientRoutes--------------------------------------------------------------------
+// routes is not authenticated-----------------------------------------------------
 router.post('/client', new CreateUserController().handle)
-router.get('/client', new ListUserController().handle)
-router.delete('/client/id', new DeleteUserController().handle)
-router.put('/client/id', new UpdateUserController().handle)
 router.post('/client/login', new AuthUserController().handle)
+
+// routes is authenticated---------------------------------------------------------
+router.get('/client', isAuthenticated, new ListUserController().handle)
+router.delete('/client/id', isAuthenticated, new DeleteUserController().handle)
+router.put('/client/id', isAuthenticated, new UpdateUserController().handle)
 router.get('/client/me', isAuthenticated, new DetailUserController().handle)
 
 export {router}
