@@ -12,7 +12,6 @@ class DeleteUserService {
             id: id
             },
         });
-        console.log(deleteUser)
         return deleteUser;
         }catch (error: unknown) {
           if (error instanceof Error) {
