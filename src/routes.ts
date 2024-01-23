@@ -4,6 +4,8 @@ import { ListUserController } from "./controllers/Userclient/ListClientControlle
 import { DeleteUserController } from "./controllers/Userclient/DeleteUserController";
 import { UpdateUserController } from "./controllers/Userclient/UpdateUserController";
 import { AuthUserController } from "./controllers/Userclient/AuthUserController";
+import { isAuthenticated } from "./middlewares/isAuthenticated";
+import { DetailUserController } from "./controllers/Userclient/DetailUserController";
 const router = Router()
 
 router.get('/on', (req:Request, res:Response)=> {
@@ -16,5 +18,6 @@ router.get('/client', new ListUserController().handle)
 router.delete('/client/id', new DeleteUserController().handle)
 router.put('/client/id', new UpdateUserController().handle)
 router.post('/client/login', new AuthUserController().handle)
+router.get('/client/me', isAuthenticated, new DetailUserController().handle)
 
 export {router}
