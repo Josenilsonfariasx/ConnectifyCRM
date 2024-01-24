@@ -1,47 +1,40 @@
 import { Request, Response } from "express";
-import prismaClient from "../../prisma";
+import { CreateComunicationService } from "../../services/UserComunication/CreateComunicationService";
+import { CreateComunicationContactService } from "../../services/UserComunication/CreateComunicationContactService";
 
 class CreateComunicationContactController {
-  async handle(req:Request, res:Response){
-    const {email, telefone, contactId} = req.body
-    try {
-      if (!email) {
-        throw new Error("Email is required");
-      }
-      if (!telefone) {
-        throw new Error("Telefone is required");
-      }
-      if (!contactId) {
-        throw new Error("clientId is required");
-      }
+  async handle(req: Request, res: Response) {
+    const { clientId, contactId, email, telefone } = req.body;
 
-      const clientAlreadyExist = await prismaClient.client.findFirst({
-        where: {
-          email: email,
-        },
+    if (!clientId && !contactId) {
+      return res.status(400).json({ message: "Enter at least one of the fields: clientId or contactId" });
+    }
+
+    if (clientId === "" || contactId === "") {
+      return res.status(400).json({ message: "ID fields cannot be left blank" });
+    }
+
+    const createComunicationService = new CreateComunicationContactService();
+    
+    try {
+      const comunication = await createComunicationService.execute({
+        email: email,
+        telefone: telefone,
+        contactId: contactId,
       });
 
-      if (clientAlreadyExist) {
-        throw new Error("Email already exists");
-      }
+      // Se chegou aqui, não houve erro, então enviamos a resposta bem-sucedida
+      return res.json(comunication);
+    } catch (error) {
+      // Se houve um erro, retornamos uma resposta de erro
+      console.error("Error in CreateComunicationController:", error);
 
-      const comunication = await prismaClient.communication.create({
-        data: {
-          email: email,
-          telefone: telefone,
-          contactId: contactId,
-        }
-      });      
-
-      return comunication;
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        throw new Error("Failed to create email/telefone for user: " + error.message);
-      } else {
-        throw new Error("Failed to create email/telefone for user: Unknown error");
-      }
+      return res.status(500).json({
+        status: "error",
+        message: "Failed to create email/telefone for user: " + error.message,
+      });
     }
   }
 }
 
-export { CreateComunicationContactController }
+export { CreateComunicationContactController };

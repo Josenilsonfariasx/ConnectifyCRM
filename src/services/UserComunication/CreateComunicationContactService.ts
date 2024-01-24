@@ -5,9 +5,8 @@ interface ComunicationRequest {
   telefone: string;
   contactId: string;
 }
-
 class CreateComunicationContactService {
-  async execute({email, telefone, contactId}){
+  async execute({email, telefone, contactId}:ComunicationRequest){
     try {
       if (!email) {
         throw new Error("Email is required");
@@ -36,7 +35,6 @@ class CreateComunicationContactService {
           contactId: contactId,
         }
       });      
-
       return comunication;
     } catch (error: unknown) {
       if (error instanceof Error) {
